@@ -168,7 +168,7 @@ impl opentelemetry_api::trace::Tracer for Tracer {
         } else {
             trace_id = builder
                 .trace_id
-                .unwrap_or_else(|| config.id_generator.new_trace_id());
+                .unwrap_or_else(|| config.id_generator.new_trace_id(config.backward_compatible));
         };
 
         // In order to accomodate use cases like `tracing-opentelemetry` we there is the ability

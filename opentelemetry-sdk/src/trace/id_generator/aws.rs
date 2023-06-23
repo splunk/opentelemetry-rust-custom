@@ -40,9 +40,9 @@ pub struct XrayIdGenerator {
 
 impl IdGenerator for XrayIdGenerator {
     /// Generates a new `TraceId` that can be converted to an X-Ray Trace ID
-    fn new_trace_id(&self) -> TraceId {
+    fn new_trace_id(&self, _backward_compatible: Option<bool>) -> TraceId {
         let mut default_trace_id: String =
-            format!("{:024x}", self.sdk_default_generator.new_trace_id());
+            format!("{:024x}", self.sdk_default_generator.new_trace_id(None));
 
         default_trace_id.truncate(24);
 

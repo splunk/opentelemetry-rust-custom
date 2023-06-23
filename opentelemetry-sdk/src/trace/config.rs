@@ -28,6 +28,9 @@ pub struct Config {
 
     /// Contains attributes representing an entity that produces telemetry.
     pub resource: Cow<'static, Resource>,
+
+    /// Set this to true if sending tracces to receiver that needs 64 bit TraceIds.
+    pub backward_compatible: Option<bool>,
 }
 
 impl Config {
@@ -84,6 +87,12 @@ impl Config {
         self.resource = Cow::Owned(resource);
         self
     }
+
+    /// Setting this to true will generate 128 bit TraceId with high 64 bits as zeros
+    pub fn with_backward_compatible(mut self, backward_compatible: bool) -> Self {
+        self.backward_compatible = Some(backward_compatible);
+        self
+    }
 }
 
 impl Default for Config {
@@ -94,6 +103,7 @@ impl Default for Config {
             id_generator: Box::<RandomIdGenerator>::default(),
             span_limits: SpanLimits::default(),
             resource: Cow::Owned(Resource::default()),
+            backward_compatible: Some(false)
         };
 
         if let Some(max_attributes_per_span) = env::var("OTEL_SPAN_ATTRIBUTE_COUNT_LIMIT")

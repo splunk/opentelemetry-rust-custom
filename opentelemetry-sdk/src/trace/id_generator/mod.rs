@@ -9,7 +9,7 @@ use std::fmt;
 /// Interface for generating IDs
 pub trait IdGenerator: Send + Sync + fmt::Debug {
     /// Generate a new `TraceId`
-    fn new_trace_id(&self) -> TraceId;
+    fn new_trace_id(&self, backward_compatible: Option<bool>) -> TraceId;
 
     /// Generate a new `SpanId`
     fn new_span_id(&self) -> SpanId;
@@ -24,7 +24,12 @@ pub struct RandomIdGenerator {
 }
 
 impl IdGenerator for RandomIdGenerator {
-    fn new_trace_id(&self) -> TraceId {
+    fn new_trace_id(&self, backward_compatible: Option<bool>) -> TraceId {   
+        let backward_compatible_val: bool = backward_compatible == Some(true);
+        if backward_compatible_val {
+            let span_id_to_convert: SpanId = CURRENT_RNG.with(|rng| SpanId::from(rng.borrow_mut().gen::<u64>()));
+            return TraceId::from_hex(&span_id_to_convert.to_string()).unwrap();
+        }
         CURRENT_RNG.with(|rng| TraceId::from(rng.borrow_mut().gen::<u128>()))
     }
 

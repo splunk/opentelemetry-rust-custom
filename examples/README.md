@@ -36,6 +36,15 @@ This example uses following crates from this repo:
 - opentelemetry(tracing)
 - opentelemetry-jaeger
 
+## backward-compatibility
+**Tracing**
+
+This example uses following crates from this repo:
+- opentelemetry
+- opentelemetry-sdk
+- opentelemetry-otlp
+- opentelemetry-semantic-conventions
+
 The application is built using `tokio`.
 
 Check this example if you want to understand *how to integrate tracing with opentelemetry*.
