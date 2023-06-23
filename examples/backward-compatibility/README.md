@@ -1,7 +1,7 @@
 # Backward Compatibility -  Example
 
 This example shows how to create an opentelemetry pipeline to send traces to the receiver that requires TraceID to be in 64-bit format.
-Setting the **with_backward_compatible** flag in the Trace config will generate a 128-bit TraceID with high 64-bits set to Zeros. For example, `0000000000000000830f23b7f0bf5f84`.
+Setting the **with_backward_compatible** flag to true in the Trace config will generate a 128-bit TraceID with high 64-bits set to Zeros. For example, `0000000000000000830f23b7f0bf5f84`.
 The receiver that requires 64-bit TraceID will only pick the low 64-bits by default.
 
 The default value of **with_backward_compatible** flag is false and not setting this or setting it to false will generate 128-bit TraceID. For example, `62a7aade3f9ce7174c6b2c859398d856`.
