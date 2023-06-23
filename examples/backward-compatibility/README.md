@@ -16,6 +16,8 @@ $ docker run -p 4317:4317 otel/opentelemetry-collector-dev:latest
 
 ```shell
 $ cargo run
+
+Tracer created with ID: 0000000000000000830f23b7f0bf5f84
 ```
 
 
