@@ -7,7 +7,7 @@ use opentelemetry::{
 };
 use opentelemetry_otlp::{WithExportConfig};
 use opentelemetry_semantic_conventions as semcov;
-
+use std::{thread, time::Duration};
 use reqwest;
 use hyper::Client;
 
@@ -118,6 +118,7 @@ pub async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     let main_cx = Context::current_with_span(m_span);
     let mut span = tracer.start_with_context("operation waiting", &main_cx);
     span.set_attribute(KeyValue::new("sample_key", "sample_value")); 
+    thread::sleep(Duration::from_millis(5000));
     span.add_event(
         "Waited 5 sec before call!".to_string(),
         vec![Key::new("bogons").i64(100)],
